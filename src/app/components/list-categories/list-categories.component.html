@@ -1,0 +1,18 @@
+<div>
+    <h1>Categorias</h1>
+    <button mat-button (click)="nova()">Nova</button>
+    @for (category of categories; track $index) {
+        <div style="display: flex;">
+            <p>{{category.id}} | {{category.name}}</p>
+            <div style="padding-left: 10px;">
+                <p>
+                    <button mat-button (click)="editar(category)">Editar</button>
+                    <button mat-button (click)="excluir(category)">Excluir</button>
+                </p>
+            </div>
+        </div>
+    }
+</div>
+
+
+

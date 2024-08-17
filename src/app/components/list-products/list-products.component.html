@@ -1,0 +1,17 @@
+<div>
+    <h1>Produtos</h1>
+    <button mat-button (click)="novo()">Novo</button>
+</div>
+@for (product of products; track $index) {
+    <div style="display: flex;">
+        
+            <p>{{product.id}} | {{product.name}}  | {{product.categoryDto.name}}</p>
+            
+        <div>
+            <p>
+                <button mat-button (click)="editar(product)">Editar</button>
+                <button mat-button (click)="excluir(product)">Excluir</button>
+            </p>
+        </div>
+    </div>
+}

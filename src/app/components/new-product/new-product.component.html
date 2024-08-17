@@ -1,0 +1,13 @@
+<p>Nome do produto</p>
+<input [(ngModel)]="name" matInput type="text">
+<p>Categoria</p>
+    <mat-form-field>
+        <mat-label>Categoria</mat-label>
+        <select matNativeControl [(ngModel)]="categoryId">
+          @for (category of categories; track $index) {
+            <option [value]="category.id" >{{category.name}}</option>
+          }
+        </select>
+    </mat-form-field>
+
+<button style="padding-top: 20px;" mat-button (click)="criar()">Criar</button>
