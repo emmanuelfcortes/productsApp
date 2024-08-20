@@ -1,5 +1,4 @@
-import { Component, inject, model } from '@angular/core';
-import { AppModule } from '../../app.module';
+import { Component, inject, model, OnInit } from '@angular/core';
 import { Dialog } from '@angular/cdk/dialog';
 import { NewCategoryCommand } from '../../interfaces/category.interface';
 import { FormsModule } from '@angular/forms';
@@ -23,13 +22,17 @@ import { DialogData, ListCategoriesComponent } from '../list-categories/list-cat
     MatDialogClose,
   ],
   templateUrl: './new-category.component.html',
-  styleUrl: './new-category.component.css'
+  styleUrl: './new-category.component.scss'
 })
-export class NewCategoryComponent extends Dialog{
+export class NewCategoryComponent extends Dialog implements OnInit{
   dialogRef = inject(MatDialogRef<NewCategoryComponent>);
   readonly data = inject<DialogData>(MAT_DIALOG_DATA);
   readonly name = model(this.data.name);
-
+  edit: boolean = false;
+  ngOnInit(): void {
+    if(this.data.name)
+      this.edit = true;
+  }
   public criar(){
     this.data.name = this.name();
     this.dialogRef.close(this.data.name);

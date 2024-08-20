@@ -13,6 +13,7 @@ import {
 } from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import {MatTableModule} from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { NewCategoryComponent } from '../new-category/new-category.component';
 
@@ -23,15 +24,16 @@ export interface DialogData {
 @Component({
   selector: 'app-list-categories',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatButtonModule],
+  imports: [MatFormFieldModule, MatInputModule, MatButtonModule, MatTableModule],
   templateUrl: './list-categories.component.html',
-  styleUrl: './list-categories.component.css'
+  styleUrl: './list-categories.component.scss'
 })
 
 export class ListCategoriesComponent implements OnInit {
   constructor(private _categoryService: CategoryService){}
   categories: CategoryDto[] = [];
   dialog = inject(MatDialog);
+  displayedColumns = ["id", "name","actions"];
   
   ngOnInit(): void {
     this._categoryService.findAll().subscribe((categories) =>{

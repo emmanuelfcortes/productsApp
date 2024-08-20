@@ -29,7 +29,7 @@ import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform
     
   ],
   templateUrl: './new-product.component.html',
-  styleUrl: './new-product.component.css'
+  styleUrl: './new-product.component.scss'
 })
 
 export class NewProductComponent extends Dialog implements OnInit{
@@ -38,8 +38,11 @@ export class NewProductComponent extends Dialog implements OnInit{
   readonly name = model(this.data.name);
   categoryId = this.data.category?.id
   readonly categories = this.data.categories;
+  edit: boolean = false;
   public ngOnInit(): void {
-    
+    if(this.data.name)
+      this.edit = true;
+
   }
   public criar(){
     let categoryDto = this.categories.find(cat => cat.id == this.categoryId);

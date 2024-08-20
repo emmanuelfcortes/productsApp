@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ProductService } from '../../services/product.service';
+import { ProductService } from "../../../app/services/product.service";
 import { NewProductCommand, ProductDto } from '../../interfaces/product.interface';
 import { CommonModule } from '@angular/common';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -13,6 +13,7 @@ import { AppModule } from '../../app.module';
 import { CategoryDto } from '../../interfaces/category.interface';
 import { NewProductComponent } from '../new-product/new-product.component';
 import { CategoryService } from '../../services/category.service';
+import { MatTableModule } from '@angular/material/table';
 
 export interface DialogData {
   name: string;
@@ -22,11 +23,12 @@ export interface DialogData {
 @Component({
   selector: 'app-list-products',
   standalone: true,
-  imports:[MatButtonModule], 
+  imports:[MatButtonModule, MatTableModule], 
   templateUrl: './list-products.component.html',
-  styleUrl: './list-products.component.css'
+  styleUrl: './list-products.component.scss'
 })
 export class ListProductsComponent implements OnInit{
+  displayedColumns = ["id","name","category","actions"];
   constructor(
     private _productService: ProductService, 
     private _categoryService: CategoryService
@@ -35,11 +37,12 @@ export class ListProductsComponent implements OnInit{
   categories: CategoryDto[] = [];
   dialog = inject(MatDialog);
   
+  
   ngOnInit(): void {
-    this._productService.findAll().subscribe((products) =>{
+    this._productService.findAll().subscribe((products: ProductDto[]) =>{
       this.products = products;
     })
-    this._categoryService.findAll().subscribe((categories) =>{
+    this._categoryService.findAll().subscribe((categories: CategoryDto[]) =>{
       this.categories = categories;
     })
   }
