@@ -4,7 +4,7 @@ import { NewProductCommand, ProductDto } from '../../interfaces/product.interfac
 import { CommonModule } from '@angular/common';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
-import {MatButtonModule} from'@angular/material/button';
+import {MatButtonModule, MatFabButton, MatIconButton} from'@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterOutlet } from '@angular/router';
@@ -14,6 +14,8 @@ import { CategoryDto } from '../../interfaces/category.interface';
 import { NewProductComponent } from '../new-product/new-product.component';
 import { CategoryService } from '../../services/category.service';
 import { MatTableModule } from '@angular/material/table';
+import {MatIconModule, MatIconRegistry} from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 export interface DialogData {
   name: string;
@@ -23,7 +25,7 @@ export interface DialogData {
 @Component({
   selector: 'app-list-products',
   standalone: true,
-  imports:[MatButtonModule, MatTableModule], 
+  imports:[MatButtonModule, MatTableModule,MatIconModule,MatTooltipModule], 
   templateUrl: './list-products.component.html',
   styleUrl: './list-products.component.scss'
 })
