@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.products.application.ProductApplicationService;
@@ -19,18 +20,21 @@ import br.com.products.dto.ProductDto;
 
 @CrossOrigin
 @RestController
+@RequestMapping("/api/produtos")
+
+
 public class ProductRestResource {
 	ProductApplicationService service;
 	public ProductRestResource(ProductApplicationService service) {
 		this.service = service;
 	}
 	
-	@GetMapping("/produtos")
+	@GetMapping("")
 	public List<ProductDto> findAllProducts() {
 		return service.findAll();
 	}
 	
-	@GetMapping("/produtos/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<ProductDto> findProduct(@PathVariable Long id) {
 		try {
 			return new ResponseEntity(service.findById(id), HttpStatus.OK);
@@ -39,7 +43,7 @@ public class ProductRestResource {
 		}
 	}
 	
-	@PostMapping("/produtos")
+	@PostMapping("")
 	public ResponseEntity<ProductDto> createProduct(@RequestBody NewProductCommand command) {
 		try {
 			return new ResponseEntity(service.create(command), HttpStatus.OK);
@@ -48,7 +52,7 @@ public class ProductRestResource {
 		}
 	}	
 	
-	@PutMapping("/produtos")
+	@PutMapping("")
 	public ResponseEntity<ProductDto> updateProduct(@RequestBody ProductDto productDto) {
 		try {
 			return new ResponseEntity(service.update(productDto), HttpStatus.OK);
@@ -57,7 +61,7 @@ public class ProductRestResource {
 		}
 	}
 	
-	@DeleteMapping("/produtos/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<ProductDto> deleteById(@PathVariable Long id) {
 		try {
 			return new ResponseEntity(service.delete(id), HttpStatus.OK);

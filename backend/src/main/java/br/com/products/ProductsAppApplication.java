@@ -3,7 +3,7 @@ package br.com.products;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "configurations")
 public class ProductsAppApplication {
 
 	public static void main(String[] args) {

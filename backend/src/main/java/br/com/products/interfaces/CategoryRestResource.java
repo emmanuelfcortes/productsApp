@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.products.application.CategoryApplicationService;
@@ -19,18 +20,19 @@ import br.com.products.dto.CategoryDto;
 
 @CrossOrigin
 @RestController
+@RequestMapping("/api/categorias")
 public class CategoryRestResource {
 	CategoryApplicationService service;
 	public CategoryRestResource(CategoryApplicationService service) {
 		this.service = service;
 	}
 	
-	@GetMapping("/categorias")
+	@GetMapping("")
 	public List<CategoryDto> findAllProducts() {
 		return service.findAll();
 	}
 	
-	@GetMapping("/categorias/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<CategoryDto> findCategory(@PathVariable Long id) {
 		try {
 			return new ResponseEntity(service.findById(id), HttpStatus.OK);
@@ -39,7 +41,7 @@ public class CategoryRestResource {
 		}
 	}
 	
-	@PostMapping("/categorias")
+	@PostMapping("")
 	public ResponseEntity<CategoryDto> createCategory(@RequestBody NewCategoryCommand command) {
 		try {
 			return new ResponseEntity(service.create(command), HttpStatus.OK);
@@ -48,7 +50,7 @@ public class CategoryRestResource {
 		}
 	}	
 	
-	@PutMapping("/categorias")
+	@PutMapping("")
 	public ResponseEntity<CategoryDto> updateCategory(@RequestBody CategoryDto categoryDto) {
 		try {
 			return new ResponseEntity(service.update(categoryDto), HttpStatus.OK);
@@ -57,7 +59,7 @@ public class CategoryRestResource {
 		}
 	}
 	
-	@DeleteMapping("/categorias/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<CategoryDto> deleteById(@PathVariable Long id) {
 		try {
 			return new ResponseEntity(service.delete(id), HttpStatus.OK);
