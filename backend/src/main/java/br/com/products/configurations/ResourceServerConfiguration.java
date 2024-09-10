@@ -1,3 +1,4 @@
+package br.com.products.configurations;
 //package configurations;
 //
 //import org.springframework.context.annotation.Configuration;
@@ -15,3 +16,5 @@
 //   }
 //
 //}
+
+

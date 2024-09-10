@@ -20,5 +20,11 @@ public class AutenticationRestResource {
 		return "postAll";
 	}
 	
+	@GetMapping("/error")
+	public String error() {
+		return "<html><body><h1>Erro!</h1></body></html>";
+	}
+	
+	
 	
 }

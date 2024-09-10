@@ -1,4 +1,4 @@
-
+package br.com.products.configurations;
 //package configurations;
 //
 //import org.springframework.beans.factory.annotation.Value;
@@ -76,3 +76,7 @@
 //   }
 //
 //}
+
+
+
+

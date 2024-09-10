@@ -1,38 +1,23 @@
-package configurations;
+package br.com.products.configurations;
 
 import java.util.List;
 
-import javax.sql.DataSource;
-
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 
-import br.com.products.interfaces.AutenticationRestResource;
-import jakarta.servlet.DispatcherType;
 import jakarta.servlet.http.HttpServletRequest;
 
 
@@ -54,20 +39,19 @@ public class ServerSecurityConfig{
 
    @Bean
    protected SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-	   http
-	   .csrf(csrf -> csrf.disable())
-	   .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-	   .authorizeHttpRequests(authorizeHttpRequests -> 
-	   		authorizeHttpRequests
-	   		.requestMatchers(HttpMethod.GET,"/error").permitAll()
-	   		.requestMatchers(HttpMethod.GET,"/auth").permitAll()
-	   		.requestMatchers(HttpMethod.GET,"/api/categorias").permitAll()
-	   		.requestMatchers(HttpMethod.GET,"/api/produtos").hasAnyRole("USER","ADMIN")
-	   		.anyRequest().authenticated()
-	   	)
-	   .cors(c -> c.configurationSource(this::getCorsConfiguration))
-	   .formLogin()
-	   ;
+       http
+               .csrf(AbstractHttpConfigurer::disable)
+               .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+               .authorizeHttpRequests(authorizeHttpRequests ->
+                       authorizeHttpRequests
+                       		
+                               .requestMatchers(HttpMethod.GET, "/api/categorias/**").permitAll()
+                               .requestMatchers(HttpMethod.GET, "/error/**").permitAll()
+                               .requestMatchers(HttpMethod.GET, "/api/produtos").hasAnyRole("USER", "ADMIN")
+                               .anyRequest().authenticated()
+               )
+               .cors(c -> c.configurationSource(this::getCorsConfiguration))
+               .formLogin( form -> form.loginPage("/auth").permitAll());
 
 	   return http.build();
    }
@@ -139,7 +123,7 @@ public class ServerSecurityConfig{
        config.setAllowedHeaders(List.of("*"));
        return config;
    }
-//   
+   
 //   @Bean
 //   public UserDetailsManager userDetailsService() {
 //       UserDetails user1 = User.withUsername("user1")
@@ -156,7 +140,7 @@ public class ServerSecurityConfig{
 //           .build();
 //       return new InMemoryUserDetailsManager(user1, user2, admin);
 //   }
-   
+//   
 //   @Bean
 //	public PasswordEncoder passwordEncoder() {
 //	    return new BCryptPasswordEncoder();
